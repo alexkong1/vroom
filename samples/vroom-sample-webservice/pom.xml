@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.fizz-buzz.vroom</groupId>
         <artifactId>vroom-maven-parent</artifactId>
-        <version>0.9.15-SNAPSHOT</version>
+        <version>0.9.25-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
 
@@ -101,10 +101,29 @@
             <artifactId>objectify</artifactId>
             <version>${objectify.version}</version>
             <exclusions>
-                <!-- objectify wants to use an older version of appengine-api-1.0-sdk, so override it -->
+                <!-- objectify wants to use an older version of appengine-api-1.0-sdk, so exclude it -->
                 <exclusion>
                     <groupId>com.google.appengine</groupId>
                     <artifactId>appengine-api-1.0-sdk</artifactId>
+                </exclusion>
+                <!-- objectify wants to use an older version of guava, so exclude it -->
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.dagger</groupId>
+            <artifactId>dagger-compiler</artifactId>
+            <version>${dagger.version}</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -126,7 +145,6 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.restlet.gae</groupId>
@@ -166,6 +184,18 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.squareup.dagger</groupId>
+                        <artifactId>dagger-compiler</artifactId>
+                        <version>${dagger.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -242,7 +272,8 @@
             <id>vroom-sample-prod</id>
             <properties>
                 <!-- allowed origins for CORS requests.  -->
-                <vroom-sample.env.cors.allowed-origins>http://vroom-sample.appspot.com</vroom-sample.env.cors.allowed-origins>
+                <vroom-sample.env.cors.allowed-origins>http://vroom-sample.appspot.com
+                </vroom-sample.env.cors.allowed-origins>
                 <vroom-sample.env.api-base-url>http://api.vroom-sample.appspot.com/root/</vroom-sample.env.api-base-url>
             </properties>
         </profile>

@@ -37,9 +37,11 @@ public class OfyUtils {
      * the new filter will be added to any existing filters already assigned to it.  If the query parameter is null,
      * a new Query object will be created.
      *
-     * @param query an existing Query object to reuse, or null if a new one should be created
-     * @param field the field for which the filter should be created
-     * @param value the filtering value
+     * @param <DAO>    the type of the DAO
+     * @param <T>      the type of the filter argument
+     * @param query    an existing Query object to reuse, or null if a new one should be created
+     * @param field    the field for which the filter should be created
+     * @param value    the filtering value
      * @param daoClass the DAO class
      * @return a Query with a newly assigned filter
      */
@@ -49,7 +51,7 @@ public class OfyUtils {
                                                 Class<DAO> daoClass) {
         Query<DAO> result;
         if (query == null) {
-            LoadType<DAO> loader = (LoadType<DAO>) ofy().load().type(daoClass);
+            LoadType<DAO> loader = ofy().load().type(daoClass);
             result = loader.filter(field, value);
         } else
             result = query.filter(field, value);

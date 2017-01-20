@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.fizz-buzz.vroom</groupId>
         <artifactId>vroom-maven-parent</artifactId>
-        <version>0.9.15-SNAPSHOT</version>
+        <version>0.9.25-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
 
@@ -15,7 +15,10 @@
 
     <properties>
         <!-- dependency versions -->
+        <apppengine-gcs-client-version>0.4.4</apppengine-gcs-client-version>
         <commons-fileupload.version>1.2</commons-fileupload.version>
+        <google-api-services-storage.version>v1-rev25-1.19.1</google-api-services-storage.version>
+        <google-apis.version>1.22.0</google-apis.version>
     </properties>
 
     <dependencies>
@@ -30,13 +33,6 @@
             <groupId>com.fizz-buzz.vroom</groupId>
             <artifactId>vroom-core</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <!-- appengine-gcs-client requires guava 15 (hard minimum), but vroom-core specifies 14.0.1 -->
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -48,7 +44,62 @@
         <dependency>
             <groupId>com.google.appengine.tools</groupId>
             <artifactId>appengine-gcs-client</artifactId>
-            <version>RELEASE</version>
+            <version>${apppengine-gcs-client-version}</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.apis</groupId>
+                    <artifactId>google-api-services-storage</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>com.google.http-client</groupId>
+                    <artifactId>google-http-client-appengine</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>com.google.http-client</groupId>
+                    <artifactId>google-http-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-storage</artifactId>
+            <version>${google-api-services-storage.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.api-client</groupId>
+                    <artifactId>google-api-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>${google-apis.version}</version>
+            <exclusions>
+                <!-- google-api-client depends on guava-jdk5, which we don't really want in the classpath because we
+                     have a newer, non-jdk5 version of guava on the classpath also, and we want that newer version.  -->
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava-jdk5</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-appengine</artifactId>
+            <version>${google-apis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>${google-apis.version}</version>
         </dependency>
 
         <!-- test dependencies -->

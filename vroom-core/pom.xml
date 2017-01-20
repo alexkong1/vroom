@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.fizz-buzz.vroom</groupId>
         <artifactId>vroom-maven-parent</artifactId>
-        <version>0.9.15-SNAPSHOT</version>
+        <version>0.9.25-SNAPSHOT</version>
     </parent>
 
     <artifactId>vroom-core</artifactId>
@@ -27,7 +27,10 @@
 
     <properties>
         <!-- dependency versions -->
+        <assertj-core.version>1.6.1</assertj-core.version>
+        <dagger.version>1.2.2</dagger.version>
         <fest-reflect.version>1.4.1</fest-reflect.version>
+        <mockito.version>1.9.5</mockito.version>
     </properties>
 
     <dependencies>
@@ -102,7 +105,20 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Compile/runtime dependencies -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- runtime dependencies -->
         <dependency>
             <groupId>com.fizz-buzz.vroom</groupId>
             <artifactId>vroom-dto</artifactId>
@@ -131,19 +147,12 @@
             <groupId>com.googlecode.objectify</groupId>
             <artifactId>objectify</artifactId>
             <version>${objectify.version}</version>
-            <exclusions>
-                <!-- objectify wants to use an older version of guava, so exclude it -->
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-reflect</artifactId>
-            <version>${fest-reflect.version}</version>
+            <groupId>com.squareup.dagger</groupId>
+            <artifactId>dagger</artifactId>
+            <version>${dagger.version}</version>
         </dependency>
 
         <dependency>
@@ -188,6 +197,20 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+                <dependencies>
+                    <!-- use dagger-compiler for annotation processing during compilation -->
+                    <dependency>
+                        <groupId>com.squareup.dagger</groupId>
+                        <artifactId>dagger-compiler</artifactId>
+                        <version>${dagger.version}</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.google.guava</groupId>
+                                <artifactId>guava</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>

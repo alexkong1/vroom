@@ -14,10 +14,9 @@ package com.fizzbuzz.vroom.core.exception;
  * limitations under the License.
  */
 
-public class NotModifiedException
-        extends RuntimeException {
+public class NotModifiedException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3195519487641189972L;
 
     public NotModifiedException(final String message) {
         super(message);

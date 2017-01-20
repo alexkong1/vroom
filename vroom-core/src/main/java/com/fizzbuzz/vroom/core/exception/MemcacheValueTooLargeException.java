@@ -1,4 +1,4 @@
-package com.fizzbuzz.vroom.core.service.datastore;
+package com.fizzbuzz.vroom.core.exception;
 
 /*
  * Copyright (c) 2014 Fizz Buzz LLC
@@ -14,19 +14,23 @@ package com.fizzbuzz.vroom.core.service.datastore;
  * limitations under the License.
  */
 
-import com.fizzbuzz.vroom.core.domain.IEntityObject;
-import com.googlecode.objectify.Key;
+public class MemcacheValueTooLargeException extends RuntimeException {
 
-public abstract class ParentedDao<EO extends IEntityObject> extends VroomDao<EO> {
+    private static final long serialVersionUID = 8128978488486780045L;
 
-    @Override
-    public Key<?> getKey() {
-        return Key.create(getParentKey(), getClass(), getId());
+    public MemcacheValueTooLargeException() {
+        super();
     }
 
-    /**
-     * Returns the key of the parent entity.
-     * @return the parent's key
-     */
-    public abstract Key<?> getParentKey();
+    public MemcacheValueTooLargeException(final String message) {
+        super(message);
+    }
+
+    public MemcacheValueTooLargeException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public MemcacheValueTooLargeException(final Throwable cause) {
+        super(cause);
+    }
 }

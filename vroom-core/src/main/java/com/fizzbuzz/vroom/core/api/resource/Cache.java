@@ -1,4 +1,4 @@
-package com.fizzbuzz.vroom.core.service.datastore;
+package com.fizzbuzz.vroom.core.api.resource;
 
 /*
  * Copyright (c) 2014 Fizz Buzz LLC
@@ -14,19 +14,12 @@ package com.fizzbuzz.vroom.core.service.datastore;
  * limitations under the License.
  */
 
-import com.fizzbuzz.vroom.core.domain.IEntityObject;
-import com.googlecode.objectify.Key;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public abstract class ParentedDao<EO extends IEntityObject> extends VroomDao<EO> {
-
-    @Override
-    public Key<?> getKey() {
-        return Key.create(getParentKey(), getClass(), getId());
-    }
-
-    /**
-     * Returns the key of the parent entity.
-     * @return the parent's key
-     */
-    public abstract Key<?> getParentKey();
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Cache {
 }

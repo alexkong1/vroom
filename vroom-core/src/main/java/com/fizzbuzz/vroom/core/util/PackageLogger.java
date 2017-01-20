@@ -1,4 +1,4 @@
-package com.fizzbuzz.vroom.core.service.datastore;
+package com.fizzbuzz.vroom.core.util;
 
 /*
  * Copyright (c) 2014 Fizz Buzz LLC
@@ -14,19 +14,10 @@ package com.fizzbuzz.vroom.core.service.datastore;
  * limitations under the License.
  */
 
-import com.fizzbuzz.vroom.core.domain.IEntityObject;
-import com.googlecode.objectify.Key;
-
-public abstract class ParentedDao<EO extends IEntityObject> extends VroomDao<EO> {
-
-    @Override
-    public Key<?> getKey() {
-        return Key.create(getParentKey(), getClass(), getId());
+class PackageLogger {
+    // This class exists just to define a static string for use by other classes in this package. Make the constructor
+    // private to prevent instantiation.
+    private PackageLogger() {
     }
 
-    /**
-     * Returns the key of the parent entity.
-     * @return the parent's key
-     */
-    public abstract Key<?> getParentKey();
-}
+    public static final String TAG = "com.fizzbuzz.vroom.core.util";}
